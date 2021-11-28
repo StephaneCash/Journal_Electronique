@@ -21,9 +21,9 @@ $res = $pdo->query($requete);
 </head>
 
 <style>
-* {
-    font-family: Segoe UI;
-}
+    * {
+        font-family: Segoe UI;
+    }
 </style>
 
 <body style="background-color: #efefef">
@@ -34,12 +34,9 @@ $res = $pdo->query($requete);
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 style="margin-top: 100px; border:1px solid #8d8d8d; padding:10px">Messages <i
-                            class="fa fa-envelope" style='color:green'></i></h4>
-
-                    <hr>
-                    </hr>
-
+                    <h4 style="margin-top: 100px; border:1px solid #8d8d8d; padding:10px">Messages <i class="fa fa-envelope" style='color:green'></i></h4>
+                    Messages non lus <i class="fa fa-bell" style='color:#d9534f; font-size:17px'></i>
+                    <p></p>
                     <div style="box-shadow: 2px 2px 18px rgba(0, 0, 0, 0.2); height: 72vh; overflow: auto;">
                         <table class="table table-bordered table-striped">
                             <thead style="background-color:#50508b; color:white">
@@ -53,16 +50,16 @@ $res = $pdo->query($requete);
                             </thead>
                             <tbody>
                                 <?php while ($msg = $res->fetch()) { ?>
-                                <tr>
-                                    <td> <?php echo $msg['id_sec'] ?> </td>
-                                    <td> <?php
+                                    <tr>
+                                        <td> <?php echo $msg['id_sec'] ?> </td>
+                                        <td> <?php
                                                 $content = $msg['content'];
                                                 $sub = substr($content, 0, 10);
                                                 echo $sub . "...";
                                                 ?>
-                                    </td>
-                                    <td>ISPT</td>
-                                    <td><?php
+                                        </td>
+                                        <td>ISPT</td>
+                                        <td><?php
                                             if ($msg['statut'] == 0) {
                                                 echo "En attente";
                                             } else if ($msg['statut'] == 1) {
@@ -71,8 +68,8 @@ $res = $pdo->query($requete);
                                                 echo "Répondu";
                                             }
                                             ?></td>
-                                    <td>
-                                        <?php
+                                        <td>
+                                            <?php
                                             if ($msg['statut'] == 0) {
                                                 echo "<button class='btn btn-warning'> <i class='fa fa-spinner fa-spin'></i></button>";
                                             } else if ($msg['statut'] == 1) {
@@ -82,16 +79,16 @@ $res = $pdo->query($requete);
                                                     <button class='btn btn-success'> <i class='fa fa-eye'></i></button> </a>";
                                             }
                                             ?>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h4
-                        style="margin-top: 100px; border:1px solid #8d8d8d; padding:10px; font-size:17px; font-family:Segoe UI">
+                    <h4 style="margin-top: 100px; border:1px solid #8d8d8d; 
+                        padding:10px; font-size:17px; font-family:Segoe UI; box-shadow: 2px 2px 18px silver">
                         Détails</h4>
 
                     <hr>
@@ -100,7 +97,7 @@ $res = $pdo->query($requete);
                     if (isset($_GET['id'])) {
                         $id = $_GET['id'];
 
-                        $req = "SELECT * FROM msgIspt WHERE id_sec='$id'";
+                        $req = "SELECT * FROM msgIspt as mis, msget as met WHERE (id_sec='$id') AND (mis.id_et = met.id_et)";
 
                         $resp = $pdo->query($req);
 
@@ -112,36 +109,43 @@ $res = $pdo->query($requete);
                     }
                     ?>
 
-
                     <?php
                     if (!empty($numbr)) { ?>
-                    <?php while ($msgR = $resp->fetch()) { ?>
-                    <div style="border:1px solid #8d8d8d; height:auto">
-                        <div class="col-md-6">
-                            <h5>De : <?php echo $msgR['dest'] ?></h5>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Date de réponse : <?php echo $msgR['dateRec'] ?></h5>
-                        </div>
-                        <div style="border-bottom:1px solid silver; height: 45px;"></div>
-                        <div class="col-md-12">
-                            <h5 style=" padding:5px; font-family:Segoe UI;">
-                                Message <i class="fa fa-envelope-open"></i>
-                                :
-                            </h5>
-                            <h5 style=" padding:15px;height: auto; font-family:Segoe UI; border:1px solid silver">
-                                <?php echo $msgR['content'] ?></h5>
-                            <hr>
+                        <?php while ($msgR = $resp->fetch()) { ?>
+                            <div style="border:1px solid #8d8d8d; height:auto; box-shadow: 2px 2px 18px silver; background:#fff">
+                                <div class="col-md-6">
+                                    <h5>De : <?php echo $msgR['dest'] ?></h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Date de réponse : <?php echo $msgR['dateRec'] ?></h5>
+                                </div>
+                                <div style="border-bottom:1px solid silver; height: 45px;"></div>
+                                <div class="col-md-12">
+                                    <h5 style=" padding:5px; font-family:Segoe UI;">
+                                        Message <i class="fa fa-envelope-open"></i>
+                                        :
+                                    </h5>
+                                    <div style=" padding:15px;height: auto; font-family:Segoe UI; border:1px solid silver">
+                                        <h5>Etudiant :</h5>
+                                        <div style="background:#ededed; padding: 10px; margin-top:5px">
+                                            <?php echo $msgR['contentEt'] ?>
+                                        </div>
+                                        <hr>
+                                        <h5>Section :</h5>
+                                        <div style="background:#efefef; padding: 10px; margin-top:5px">
+                                            <?php echo $msgR['content'] ?>
+                                        </div>
 
+                                    </div>
+                                    <hr>
 
-                        </div>
-                        <div style="border:1px solid silver; height:70px">
+                                </div>
+                                <div style="border:1px solid silver; height:70px">
 
-                            <button class="btn btn-danger" style="float:right; margin-top:10px; margin-right:14px"><i
-                                    class="fa fa-trash"></i> Supprimer</button>
-                        </div>
-                    </div>
-                    <?php } ?>
+                                    <button class="btn btn-danger" style="float:right; margin-top:10px; margin-right:14px"><i class="fa fa-trash"></i> Supprimer</button>
+                                </div>
+                            </div>
+                        <?php } ?>
                     <?php } ?>
                     <?php
                     if (empty($numbr)) {

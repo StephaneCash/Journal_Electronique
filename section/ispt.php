@@ -38,8 +38,8 @@ $nbrMsgRep = $msgRepo['countRep'];
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" contentEt="IE=edge">
+    <meta name="viewport" contentEt="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <title>Accueil</title>
@@ -66,7 +66,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                             <div class="col-md-3">
                                 <div class="" style="border: 1px solid silver; height:20vh;
                                      text-align:center; margin-left:12px;
-                                      padding-top:10px; box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2)">
+                                      padding-top:10px; box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2); background:white">
                                     Messages reçus
                                     <p>
                                         <i class="fa fa-envelope"></i>
@@ -85,7 +85,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                                 <div class="" style="border: 1px solid silver; 
                                     height:20vh; text-align:center; 
                                     padding-top:10px; 
-                                    box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2)">
+                                    box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2); background:white">
                                     Messages Répondus
                                     <p>
                                         <i class="fa fa-check"></i>
@@ -102,7 +102,8 @@ $nbrMsgRep = $msgRepo['countRep'];
                             </div>
                             <div class="col-md-3">
                                 <div class="" style="border: 1px solid silver; height:20vh; 
-                                    text-align:center; padding-top:10px; box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2)">
+                                    text-align:center; padding-top:10px; 
+                                    box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2);background:white">
                                     Messages Rejetés
                                     <p>
                                         <i class="fa fa-close"></i>
@@ -119,13 +120,13 @@ $nbrMsgRep = $msgRepo['countRep'];
                             </div>
                             <div class=" col-md-3">
                                 <div class="" style="border: 1px solid silver; 
-                                    height:20vh; text-align:center; 
+                                    height:20vh; text-align:center; background:white;
                                     padding-top:10px; box-shadow: 2px 2px 10px 2px rgba(1, 4, 1, 0.2)">
                                     Messages en attente...
-                                    <p style="font-size:25px">
+                                    <p>
                                         <i class="fa fa-spinner"></i>
                                     </p>
-                                    <p>
+                                    <p style="font-size:25px">
                                         <?php echo $nbrMsgAtt ?>
                                     </p>
                                     <p>
@@ -172,7 +173,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                                                 <?php if ($res['statut'] == 2) { ?>
                                                     <tr style="border:1px solid silver">
                                                         <td><?php echo $res['id_et'] ?></td>
-                                                        <td style="width: 30%;"><?php echo $res['content'] ?></td>
+                                                        <td style="width: 30%;"><?php echo $res['contentEt'] ?></td>
                                                         <td><?php echo $res['objet'] ?></td>
                                                         <td><?php echo $res['idP'] ?></td>
                                                         <td><?php echo $res['dateResp'] ?></td>
@@ -184,7 +185,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                                                 <?php } else if ($res['statut'] == 1) { ?>
                                                     <tr>
                                                         <td><?php echo $res['id_et'] ?></td>
-                                                        <td><?php echo $res['content'] ?></td>
+                                                        <td><?php echo $res['contentEt'] ?></td>
                                                         <td><?php echo $res['objet'] ?></td>
                                                         <td><?php echo $res['idP'] ?></td>
                                                         <td><?php echo $res['dateResp'] ?></td>
@@ -195,7 +196,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                                                 <?php } else if ($res['statut'] == 4) { ?>
                                                     <tr>
                                                         <td><?php echo $res['id_et'] ?></td>
-                                                        <td><?php echo $res['content'] ?></td>
+                                                        <td><?php echo $res['contentEt'] ?></td>
                                                         <td><?php echo $res['objet'] ?></td>
                                                         <td><?php echo $res['idP'] ?></td>
                                                         <td><?php echo $res['dateResp'] ?></td>
@@ -208,7 +209,7 @@ $nbrMsgRep = $msgRepo['countRep'];
                                                 <?php } else if ($res['statut'] !== 1 && $_GET['isset'] == 3) { ?>
                                                     <tr>
                                                         <td><?php echo $res['id'] ?></td>
-                                                        <td><?php echo $res['content'] ?></td>
+                                                        <td><?php echo $res['contentEt'] ?></td>
                                                         <td><?php echo $res['objet'] ?></td>
                                                         <td><?php echo $res['idP'] ?></td>
                                                         <td><?php echo $res['dateRec'] ?></td>
@@ -227,17 +228,71 @@ $nbrMsgRep = $msgRepo['countRep'];
                                                 </tr>";
                                             } else {
                                                 $rep = $_GET['id_msg'];
-                                                echo $rep;
 
-                                                $req = "SELECT * FROM msget WHERE id_et='$rep'";
+                                                $req = "SELECT * FROM msget as met, plainte as pl WHERE (met.idP = pl.idP) AND (id_et='$rep')
+                                                ";
                                                 $queryM = $pdo->query($req);
 
                                                 while ($resp = $queryM->fetch()) {
-                                                    echo " <div class='col-md-12' style='border:1px solid silver; height:20vh; box-shadow: 2px 2px 18px silver; background:white'>
+
+                                                        $adressDest = $resp['adressDest'];
+                                                        $dateResp = $resp['dateResp'];
+                                                        $objetMsg = $resp['objet'];
+                                                        $contentEtMsg = $resp['contentEt'];
+                                                        $plainte = $resp['nom'];
+
+                                                    echo " <div class='col-md-12' style='border:1px solid silver; height:60vh; box-shadow: 2px 2px 18px silver; background:white'>
                                                     <div class='row'>
-                                                        <h5 style='margin-left:12px'>Message <i class='fa fa-envelope-open'></i></h5>
+                                                        <div class='col-md-12' style='background:#50508b; color:white; margin-top: -20px; height:40px;'>
+                                                            <h4 style='margin-top: 20px!important; padding-top:10px'>Message <i class='fa fa-envelope-open'></i></h4>
+                                                        </div>
+                                                        <div style='border:1px solid silver; '>
+                                                            <div class='col-md-6' style='margin-top: 20px; background:#efefef; padding:5px 15px;'>
+                                                                De : $adressDest
+                                                            </div>
+                                                            <div class='col-md-6' style='margin-top: 20px; background:#efefef; padding: 5px 10px'>
+                                                                Date : $dateResp 
+                                                            </div>
+                                                        </div>
+
+                                                        <div class='col-md-12'>
+                                                            <div class='row'>
+                                                                <div style='margin-top: 20px' class='col-md-6'>
+                                                                    Objet : $objetMsg
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        <div class='col-md-12' style='margin-top: 20px'>
+                                                            Plainte : $plainte
+                                                        </div>
+
+                                                        <div class='col-md-12' style='margin-top: 20px'>
+                                                            <div class='col-md-6' style='padding:0'>
+                                                                Message : 
+                                                                <hr></hr>
+                                                                <div class='' style='border:1px solid silver; height:20vh;
+                                                                 margin-top: 20px; box-shadow: 2px 2px 20px silver; 
+                                                                 border-radius:4px; padding: 5px'>
+                                                                 $contentEtMsg
+                                                                </div>
+                                                            </div>
+                                                            <div class='col-md-6'>
+                                                                Réponse : 
+                                                                <hr></hr>
+                                                                <div class='' style='border:0px solid silver; height:20vh;
+                                                                 margin-top: 20px; box-shadow: 2px 2px 20px silver'>
+                                                                    <textarea class='form-control' style='height:20vh' ></textarea>
+                                                                </div>
+                                                                <button class='btn btn-primary' style='margin-top: 10px'>
+                                                                    Envoyer <i class='fa fa-send'></i></button>
+                                                                <button class='btn btn-danger' style='margin-top: 10px'>
+                                                                    Rejeter <i class='fa fa-close'></i></button>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
-                                                    </div>". $resp['content'];
+                                                    </div>";
                                                 }
                                             }
                                         } ?>
