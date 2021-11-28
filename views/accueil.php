@@ -40,7 +40,7 @@ $res = $pdo->query($requete);
                     <hr>
                     </hr>
 
-                    <div style="box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); height: 76vh; overflow: auto;">
+                    <div style="box-shadow: 2px 2px 18px rgba(0, 0, 0, 0.2); height: 72vh; overflow: auto;">
                         <table class="table table-bordered table-striped">
                             <thead style="background-color:#50508b; color:white">
                                 <tr>
@@ -54,7 +54,7 @@ $res = $pdo->query($requete);
                             <tbody>
                                 <?php while ($msg = $res->fetch()) { ?>
                                 <tr>
-                                    <td> <?php echo $msg['id'] ?> </td>
+                                    <td> <?php echo $msg['id_sec'] ?> </td>
                                     <td> <?php
                                                 $content = $msg['content'];
                                                 $sub = substr($content, 0, 10);
@@ -78,7 +78,7 @@ $res = $pdo->query($requete);
                                             } else if ($msg['statut'] == 1) {
                                                 echo "<button class='btn btn-danger'> <i class='fa fa-close'></i></button>";
                                             } else if ($msg['statut'] == 2) {
-                                                echo "<a href='accueil.php?id=" . $msg['id'] . "'>
+                                                echo "<a href='accueil.php?id=" . $msg['id_sec'] . "'>
                                                     <button class='btn btn-success'> <i class='fa fa-eye'></i></button> </a>";
                                             }
                                             ?>
@@ -100,11 +100,11 @@ $res = $pdo->query($requete);
                     if (isset($_GET['id'])) {
                         $id = $_GET['id'];
 
-                        $req = "SELECT * FROM msgIspt WHERE id='$id'";
+                        $req = "SELECT * FROM msgIspt WHERE id_sec='$id'";
 
                         $resp = $pdo->query($req);
 
-                        $num = "SELECT count(*) countN FROM msgIspt WHERE id='$id'";
+                        $num = "SELECT count(*) countN FROM msgIspt WHERE id_sec='$id'";
 
                         $resCount = $pdo->query($num);
 

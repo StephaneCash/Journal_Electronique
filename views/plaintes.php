@@ -24,7 +24,8 @@
     ?>
 
     <div class="container"
-        style="box-shadow: 2px 2px 2px rgba(1, 0, 0, 0.2); height: 76vh; overflow: auto;margin-top:100px; border:1px solid silver">
+        style="box-shadow: 2px 2px 18px rgba(1, 0, 0, 0.2); height: 76vh; overflow: auto;margin-top:100px; border:1px solid silver">
+        <h4 style="margin-top: 20px;">Liste de plaintes</h4>
         <a href="addPlainte.php">
             <button class="btn btn-primary" style="margin-top:10px"><i class="fa fa-plus"></i> Ajoouter une nouvelle
                 plainte </button></a>

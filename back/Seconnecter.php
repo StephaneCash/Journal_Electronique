@@ -20,7 +20,7 @@ if ($user = $resultat->fetch()) {
             header('location:../views/accueil.php');
         }
         if ($_SESSION['user']['role'] == 'ispt') {
-            header('location:../views/ispt.php');
+            header('location:../section/ispt.php');
         }
     } else {
         $_SESSION['Erreurlogin'] = " <strong> Erreur !! </strong> Votre compte est désactivé. <br> Veuiller contacter l'Admin";

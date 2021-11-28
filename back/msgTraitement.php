@@ -13,7 +13,7 @@ $msgCont = isset($_POST['msgCont']) ? $_POST['msgCont'] : "";      // Message
 $dateEnvoi = date("Y-m-d  H  : i"); // Date envoi
 $dateResp = "0:0:0:0:0";
 $adressDest = isset($_POST['adressDest']) ? $_POST['adressDest'] : "";
-$statut = 0;
+$statut = 4;
 
 $requete = "insert into msgIspt(content, objet, idP,dateRec , dateEnvoi, exp, dest, statut) values(?,?,?,?,?,?,?, ?)";
 
